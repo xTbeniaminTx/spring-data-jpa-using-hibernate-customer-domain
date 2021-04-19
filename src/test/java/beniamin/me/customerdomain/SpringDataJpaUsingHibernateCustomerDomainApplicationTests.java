@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import beniamin.me.customerdomain.entities.Customer;
 import beniamin.me.customerdomain.repositories.CustomerRepository;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +16,7 @@ class SpringDataJpaUsingHibernateCustomerDomainApplicationTests {
 
   @Autowired
   CustomerRepository repository;
-  
+
   @Test
   void contextLoads() {
   }
@@ -22,7 +24,6 @@ class SpringDataJpaUsingHibernateCustomerDomainApplicationTests {
   @Test
   public void testCreate() {
     Customer customer = new Customer();
-    customer.setId(1);
     customer.setName("Eugen");
     customer.setEmail("eugen@gmail.Com");
 
@@ -56,7 +57,37 @@ class SpringDataJpaUsingHibernateCustomerDomainApplicationTests {
 
   @Test
   public void testCount() {
-    System.out.println("<<<<<<<<<<<<<<<<COUNT>>>>>>>>>>>>>>>>> "+ repository.count());
+    System.out.println("<<<<<<<<<<<<<<<<COUNT>>>>>>>>>>>>>>>>> " + repository.count());
+  }
+
+  @Test
+  public void findByEmailAndName() {
+    List<Customer> customers = repository
+        .findByEmailAndName("eugen@gmail.com", "eugen");
+    customers.forEach(c -> System.out.println(
+        "<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>> "
+            + c.getName() + "   " + c.getEmail()
+            + " <<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>"));
+  }
+
+  @Test
+  public void findByDescLike() {
+    List<Customer> customers = repository
+        .findByEmailLike("%gmail%");
+    customers.forEach(c -> System.out.println(
+        "<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>> "
+            + c.getEmail() + "   " + c.getName()
+            + " <<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>"));
+  }
+
+  @Test
+  public void findByIdsIn() {
+    List<Customer> customers = repository
+        .findByIdIn(Arrays.asList(1, 5, 3));
+    customers.forEach(c -> System.out.println(
+        "<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>> "
+            + c.getEmail() + "   " + c.getName()
+            + " <<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>"));
   }
 
 }
