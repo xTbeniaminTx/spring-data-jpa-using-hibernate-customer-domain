@@ -10,6 +10,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class SpringDataJpaUsingHibernateCustomerDomainApplicationTests {
@@ -88,6 +90,13 @@ class SpringDataJpaUsingHibernateCustomerDomainApplicationTests {
         "<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>> "
             + c.getEmail() + "   " + c.getName()
             + " <<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>"));
+  }
+
+  @Test
+  @Transactional
+  @Rollback(value = false)
+  public void updateCustomerEmail() {
+    repository.updateStudentEmail("mia.new@gmail.com", 5, "mia@gmail.com");
   }
 
 }
