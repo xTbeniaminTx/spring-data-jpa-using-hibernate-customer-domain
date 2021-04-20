@@ -10,6 +10,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +32,37 @@ class SpringDataJpaUsingHibernateCustomerDomainApplicationTests {
     customer.setName("Eugen");
     customer.setEmail("eugen@gmail.Com");
 
+    Customer customer2 = new Customer();
+    customer2.setName("Eugen");
+    customer2.setEmail("eugen@gmail.Com");
+
+    Customer customer3 = new Customer();
+    customer3.setName("Eugen");
+    customer3.setEmail("eugen@gmail.Com");
+
     repository.save(customer);
+    repository.save(customer2);
+    repository.save(customer3);
+  }
+
+  @Test
+  public void findAllSortByName2parPage() {
+    PageRequest pageable = PageRequest.of(0, 2, Direction.ASC, "name");
+    List<Customer> allCustomers = repository.findAllCustomers(pageable);
+    allCustomers.forEach(c -> System.out.println(
+        "<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>> "
+            + c.getName() + "   " + c.getEmail()
+            + " <<<<<<<<<<<<<<>>>>>>>>>>>>>"));
+  }
+
+  @Test
+  public void findAllSortByName5parPage() {
+    PageRequest pageable = PageRequest.of(0, 5, Direction.ASC, "name");
+    List<Customer> allCustomers = repository.findAllCustomers(pageable);
+    allCustomers.forEach(c -> System.out.println(
+        "<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>> "
+            + c.getName() + "   " + c.getEmail()
+            + " <<<<<<<<<<<<<<>>>>>>>>>>>>>"));
   }
 
   @Test
