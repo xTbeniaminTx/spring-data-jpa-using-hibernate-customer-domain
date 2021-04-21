@@ -1,5 +1,6 @@
 package beniamin.me.customerdomain.entities;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,9 @@ public class Customer {
 
   private String name;
   private String email;
+
+  @Embedded
+  private Address address;
 
   public Customer() {
   }
@@ -45,5 +49,13 @@ public class Customer {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Address getAddress() {
+    return address;
+  }
+
+  public void setAddress(Address address) {
+    this.address = address;
   }
 }

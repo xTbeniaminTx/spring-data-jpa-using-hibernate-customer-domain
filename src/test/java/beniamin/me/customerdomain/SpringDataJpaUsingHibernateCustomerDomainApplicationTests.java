@@ -3,6 +3,7 @@ package beniamin.me.customerdomain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import beniamin.me.customerdomain.entities.Address;
 import beniamin.me.customerdomain.entities.Customer;
 import beniamin.me.customerdomain.repositories.CustomerRepository;
 import java.util.Arrays;
@@ -10,7 +11,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.test.annotation.Rollback;
@@ -32,17 +32,15 @@ class SpringDataJpaUsingHibernateCustomerDomainApplicationTests {
     customer.setName("Eugen");
     customer.setEmail("eugen@gmail.Com");
 
-    Customer customer2 = new Customer();
-    customer2.setName("Eugen");
-    customer2.setEmail("eugen@gmail.Com");
+    Address address = new Address();
+    address.setCity("Paris");
+    address.setZipcode("75001");
+    address.setCountry("France");
 
-    Customer customer3 = new Customer();
-    customer3.setName("Eugen");
-    customer3.setEmail("eugen@gmail.Com");
+    customer.setAddress(address);
 
     repository.save(customer);
-    repository.save(customer2);
-    repository.save(customer3);
+
   }
 
   @Test
